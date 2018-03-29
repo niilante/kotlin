@@ -1255,6 +1255,7 @@ public class ImplementationBodyCodegen extends ClassBodyCodegen {
     @NotNull
     private DelegationFieldsInfo getDelegationFieldsInfo(@NotNull List<KtSuperTypeListEntry> delegationSpecifiers) {
         DelegationFieldsInfo result = new DelegationFieldsInfo();
+        if (!state.getClassBuilderMode().generateBodies) return result;
         int n = 0;
         for (KtSuperTypeListEntry specifier : delegationSpecifiers) {
             if (specifier instanceof KtDelegatedSuperTypeEntry) {
