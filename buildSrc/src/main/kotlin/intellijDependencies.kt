@@ -65,9 +65,6 @@ fun Project.intellijUltimatePluginDep(plugin: String) = intellijDep(plugin)
 fun ModuleDependency.includeJars(vararg names: String, rootProject: Project? = null) {
     names.forEach {
         var baseName = it.removeSuffix(".jar")
-        if (rootProject != null && rootProject.extra.has("ignore.jar.$baseName")) {
-            return@forEach
-        }
         if (rootProject != null && rootProject.extra.has("versions.jar.$baseName")) {
             baseName += "-${rootProject.extra["versions.jar.$baseName"]}"
         }
@@ -90,12 +87,25 @@ object IntellijRootUtils {
     }
 }
 
+val Project.intellijCoreDependencies: List<String>
+    @Suppress("UNCHECKED_CAST")
+    get() = rootProject.extra["IntellijCoreDependencies"] as List<String>
+
 fun ModuleDependency.includeIntellijCoreJarDependencies(project: Project) =
-    includeJars(*(project.rootProject.extra["IntellijCoreDependencies"] as List<String>).toTypedArray(), rootProject = project.rootProject)
+    includeJars(*project.intellijCoreDependencies.toTypedArray(), rootProject = project.rootProject)
+
+fun ModuleDependency.includeIntellijCoreJarDependencies(vararg names: String, rootProject: Project) =
+    includeJars(
+        *names.map { name ->
+            rootProject.intellijCoreDependencies.find { it.startsWith(name) }
+                    ?: error("$name was not found in intellij-core dependencies")
+        }.toTypedArray(),
+        rootProject = rootProject
+    )
 
 fun ModuleDependency.includeIntellijCoreJarDependencies(project: Project, jarsFilterPredicate: (String) -> Boolean) =
     includeJars(
-        *(project.rootProject.extra["IntellijCoreDependencies"] as List<String>).filter { jarsFilterPredicate(it) }.toTypedArray(),
+        *project.intellijCoreDependencies.filter { jarsFilterPredicate(it) }.toTypedArray(),
         rootProject = project.rootProject
     )
 

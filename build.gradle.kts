@@ -160,7 +160,7 @@ extra["IntellijCoreDependencies"] =
                "log4j",
                "picocontainer",
                "snappy-in-java-0.5.1",
-               "streamex",
+               "streamex-0.6.5",
                "trove4j")
 
 extra["nativePlatformVariants"] =

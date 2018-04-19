@@ -15,7 +15,15 @@ dependencies {
     compile(project(":compiler:ir.psi2ir"))
     compile(project(":compiler:serialization"))
     compileOnly(intellijCoreDep()) { includeJars("intellij-core") }
-    compileOnly(intellijDep()) { includeJars("annotations", "asm-all", "trove4j", "guava", rootProject = rootProject) }
+    compileOnly(intellijDep()) {
+        includeIntellijCoreJarDependencies(
+            "annotations",
+            "asm-all",
+            "trove4j",
+            "guava",
+            rootProject = rootProject
+        )
+    }
 }
 
 sourceSets {

@@ -16,7 +16,14 @@ dependencies {
     compile(project(":kotlin-script-runtime"))
     compile(commonDep("io.javaslang","javaslang"))
     compileOnly(intellijCoreDep()) { includeJars("intellij-core") }
-    compileOnly(intellijDep()) { includeJars("annotations", "trove4j", "guava", rootProject = rootProject) }
+    compileOnly(intellijDep()) {
+        includeIntellijCoreJarDependencies(
+            "annotations",
+            "trove4j",
+            "guava",
+            rootProject = rootProject
+        )
+    }
 }
 
 sourceSets {
