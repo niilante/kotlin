@@ -115,7 +115,7 @@ dependencies {
         testRuntime(intellijUltimatePluginDep("java-decompiler"))
     }
 
-    testRuntime(files("${System.getProperty("java.home")}/../lib/tools.jar"))
+    testRuntime(files(toolsJar()))
 
     springClasspath(commonDep("org.springframework", "spring-core"))
     springClasspath(commonDep("org.springframework", "spring-beans"))
