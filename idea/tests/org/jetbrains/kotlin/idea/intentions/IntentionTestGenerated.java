@@ -2360,8 +2360,7 @@ public class IntentionTestGenerated extends AbstractIntentionTest {
 
             @TestMetadata("nullableResultWithImplicitReceiver.kt")
             public void testNullableResultWithImplicitReceiver() throws Exception {
-                String fileName = KotlinTestUtils.navigationMetadata("idea/testData/intentions/branched/ifThenToElvis/nullableResultWithImplicitReceiver.kt");
-                doTest(fileName);
+                runTest("idea/testData/intentions/branched/ifThenToElvis/nullableResultWithImplicitReceiver.kt");
             }
 
             @TestMetadata("nullableThen.kt")
