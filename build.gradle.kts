@@ -151,18 +151,6 @@ val intellijSeparateSdks = project.getBooleanProperty("intellijSeparateSdks") ?:
 extra["intellijUltimateEnabled"] = intellijUltimateEnabled
 extra["intellijSeparateSdks"] = intellijSeparateSdks
 
-extra["IntellijCoreDependencies"] =
-        listOf("annotations",
-               "asm-all",
-               "guava-21.0",
-               "jdom",
-               "jna",
-               "log4j",
-               "picocontainer",
-               "snappy-in-java-0.5.1",
-               "streamex-0.6.5",
-               "trove4j")
-
 extra["nativePlatformVariants"] =
         listOf("windows-amd64",
                "windows-i386",

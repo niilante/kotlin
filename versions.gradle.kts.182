@@ -4,3 +4,14 @@ extra["versions.androidBuildTools"] = "r23.0.1"
 extra["versions.idea.NodeJS"] = "181.3494.12"
 //extra["versions.androidStudioRelease"] = "3.1.0.5"
 //extra["versions.androidStudioBuild"] = "173.4506631"
+
+extra["IntellijCoreDependencies"] =
+        listOf("annotations",
+               "asm-all",
+               "guava-23.6-jre",
+               "jdom",
+               "jna",
+               "log4j",
+               "picocontainer-1.2",
+               "streamex",
+               "trove4j")
