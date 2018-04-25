@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused") // usages in build scripts are not tracked properly
+// usages in build scripts are not tracked properly
+@file:Suppress("unused")
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -80,32 +81,36 @@ fun ModuleDependency.includeJars(vararg names: String, rootProject: Project? = n
 
 // Workaround. Top-level Kotlin function in a default package can't be called from a non-default package
 object IntellijRootUtils {
-    fun getRepositoryRootDir(project: Project): File = with (project.rootProject) {
+    fun getRepositoryRootDir(project: Project): File = with(project.rootProject) {
         return File(intellijRepoDir(), "kotlin.build.custom.deps/${extra["versions.intellijSdk"]}")
     }
 
-    fun getIntellijRootDir(project: Project): File = with (project.rootProject) {
+    fun getIntellijRootDir(project: Project): File = with(project.rootProject) {
         return File(getRepositoryRootDir(this), "intellij${if (isIntellijCommunityAvailable()) "" else "Ultimate"}")
     }
 }
 
 fun ModuleDependency.includeIntellijCoreJarDependencies(project: Project) =
-        includeJars(*(project.rootProject.extra["IntellijCoreDependencies"] as List<String>).toTypedArray(), rootProject = project.rootProject)
+    includeJars(*(project.rootProject.extra["IntellijCoreDependencies"] as List<String>).toTypedArray(), rootProject = project.rootProject)
 
 fun ModuleDependency.includeIntellijCoreJarDependencies(project: Project, jarsFilterPredicate: (String) -> Boolean) =
-        includeJars(*(project.rootProject.extra["IntellijCoreDependencies"] as List<String>).filter { jarsFilterPredicate(it) }.toTypedArray(), rootProject = project.rootProject)
+    includeJars(
+        *(project.rootProject.extra["IntellijCoreDependencies"] as List<String>).filter { jarsFilterPredicate(it) }.toTypedArray(),
+        rootProject = project.rootProject
+    )
 
-fun Project.isIntellijCommunityAvailable() = !(rootProject.extra["intellijUltimateEnabled"] as Boolean) || rootProject.extra["intellijSeparateSdks"] as Boolean
+fun Project.isIntellijCommunityAvailable() =
+    !(rootProject.extra["intellijUltimateEnabled"] as Boolean) || rootProject.extra["intellijSeparateSdks"] as Boolean
 
 fun Project.isIntellijUltimateSdkAvailable() = (rootProject.extra["intellijUltimateEnabled"] as Boolean)
 
 fun Project.intellijRootDir() = IntellijRootUtils.getIntellijRootDir(project)
 
 fun Project.intellijUltimateRootDir() =
-        if (isIntellijUltimateSdkAvailable())
-            File(intellijRepoDir(), "kotlin.build.custom.deps/${rootProject.extra["versions.intellijSdk"]}/intellijUltimate")
-        else
-            throw GradleException("intellij ultimate SDK is not available")
+    if (isIntellijUltimateSdkAvailable())
+        File(intellijRepoDir(), "kotlin.build.custom.deps/${rootProject.extra["versions.intellijSdk"]}/intellijUltimate")
+    else
+        throw GradleException("intellij ultimate SDK is not available")
 
 fun DependencyHandlerScope.excludeInAndroidStudio(rootProject: Project, block: DependencyHandlerScope.() -> Unit) {
     if (!rootProject.extra.has("versions.androidStudioRelease")) {
