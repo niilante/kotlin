@@ -19,14 +19,14 @@ package org.jetbrains.kotlin.ir.declarations
 import org.jetbrains.kotlin.descriptors.VariableDescriptor
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.symbols.IrVariableSymbol
+import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.types.KotlinType
 
 interface IrVariable : IrSymbolDeclaration<IrVariableSymbol> {
     override val descriptor: VariableDescriptor
 
     val name: Name
-    val type: KotlinType
+    val type: IrType
     val isVar: Boolean
     val isConst: Boolean
     val isLateinit: Boolean

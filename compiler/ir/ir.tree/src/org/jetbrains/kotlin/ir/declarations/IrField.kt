@@ -9,8 +9,8 @@ import org.jetbrains.kotlin.descriptors.PropertyDescriptor
 import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.ir.expressions.IrExpressionBody
 import org.jetbrains.kotlin.ir.symbols.IrFieldSymbol
+import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.types.KotlinType
 
 interface IrField : IrSymbolDeclaration<IrFieldSymbol> {
     override val descriptor: PropertyDescriptor
@@ -19,7 +19,7 @@ interface IrField : IrSymbolDeclaration<IrFieldSymbol> {
         get() = IrDeclarationKind.FIELD
 
     val name: Name
-    val type: KotlinType
+    val type: IrType
     val visibility: Visibility
     var initializer: IrExpressionBody?
 }

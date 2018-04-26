@@ -28,6 +28,7 @@ class IrErrorDeclarationImpl(
     endOffset: Int,
     override val descriptor: DeclarationDescriptor
 ) : IrDeclarationBase(startOffset, endOffset, IrDeclarationOrigin.DEFINED), IrErrorDeclaration {
+
     override val declarationKind: IrDeclarationKind get() = IrDeclarationKind.ERROR
 
     override fun <R, D> accept(visitor: IrElementVisitor<R, D>, data: D): R {

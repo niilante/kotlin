@@ -24,9 +24,9 @@ import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.expressions.IrBody
 import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
 import org.jetbrains.kotlin.ir.symbols.impl.IrSimpleFunctionSymbolImpl
+import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
 import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.kotlin.utils.SmartList
 
 class IrFunctionImpl(
@@ -37,7 +37,7 @@ class IrFunctionImpl(
     override val name: Name,
     visibility: Visibility,
     override val modality: Modality,
-    returnType: KotlinType,
+    returnType: IrType,
     isInline: Boolean,
     override val isTailrec: Boolean,
     override val isSuspend: Boolean
@@ -49,13 +49,14 @@ class IrFunctionImpl(
         startOffset: Int,
         endOffset: Int,
         origin: IrDeclarationOrigin,
-        symbol: IrSimpleFunctionSymbol
+        symbol: IrSimpleFunctionSymbol,
+        returnType: IrType
     ) : this(
         startOffset, endOffset, origin, symbol,
         symbol.descriptor.name,
         symbol.descriptor.visibility,
         symbol.descriptor.modality,
-        symbol.descriptor.returnType!!,
+        returnType,
         symbol.descriptor.isInline,
         symbol.descriptor.isTailrec,
         symbol.descriptor.isSuspend
@@ -69,10 +70,12 @@ class IrFunctionImpl(
         startOffset: Int,
         endOffset: Int,
         origin: IrDeclarationOrigin,
-        descriptor: FunctionDescriptor
+        descriptor: FunctionDescriptor,
+        returnType: IrType
     ) : this(
         startOffset, endOffset, origin,
-        IrSimpleFunctionSymbolImpl(descriptor)
+        IrSimpleFunctionSymbolImpl(descriptor),
+        returnType
     )
 
     constructor(
@@ -80,8 +83,9 @@ class IrFunctionImpl(
         endOffset: Int,
         origin: IrDeclarationOrigin,
         descriptor: FunctionDescriptor,
+        returnType: IrType,
         body: IrBody?
-    ) : this(startOffset, endOffset, origin, descriptor) {
+    ) : this(startOffset, endOffset, origin, descriptor, returnType) {
         this.body = body
     }
 

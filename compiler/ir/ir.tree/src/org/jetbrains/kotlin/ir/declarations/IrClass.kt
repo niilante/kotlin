@@ -37,6 +37,7 @@ interface IrClass : IrSymbolDeclaration<IrClassSymbol>, IrDeclarationContainer, 
     val isData: Boolean
 
     // NB type parameters can't be top-level classifiers in supetypes of a class
+    // TODO val superTypes: MutableList<IrType>
     val superClasses: MutableList<IrClassSymbol>
 
     var thisReceiver: IrValueParameter?
