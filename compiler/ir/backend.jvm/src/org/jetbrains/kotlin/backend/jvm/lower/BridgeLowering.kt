@@ -225,21 +225,21 @@ class BridgeLowering(val context: JvmBackendContext) : ClassLoweringPass {
             call.dispatchReceiver = IrGetValueImpl(
                 UNDEFINED_OFFSET,
                 UNDEFINED_OFFSET,
-                containingClass.thisAsReceiverParameter,
+                irFunction.dispatchReceiverParameter!!.symbol,
                 JvmLoweredStatementOrigin.BRIDGE_DELEGATION
             )
-            bridgeDescriptor.valueParameters.mapIndexed { i, valueParameterDescriptor ->
+            irFunction.valueParameters.mapIndexed { i, valueParameter ->
                 call.putValueArgument(
                     i,
                     IrGetValueImpl(
                         UNDEFINED_OFFSET,
                         UNDEFINED_OFFSET,
-                        valueParameterDescriptor,
+                        valueParameter.symbol,
                         JvmLoweredStatementOrigin.BRIDGE_DELEGATION
                     )
                 )
             }
-            +IrReturnImpl(UNDEFINED_OFFSET, UNDEFINED_OFFSET, bridgeDescriptor, call)
+            +IrReturnImpl(UNDEFINED_OFFSET, UNDEFINED_OFFSET, irFunction.symbol, call)
         }.apply {
             irFunction.body = this
         }
